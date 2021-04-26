@@ -1,25 +1,27 @@
-import logo from './logo.svg';
+import { connect } from 'react-redux';
 import './App.css';
+import Cart from './components/Cart/Cart';
+import Shop from './components/Shop/Shop';
+import { removeFromCart } from './redux/actions/cartAction';
 
-function App() {
+function App(props) {
+  const {cart} = props;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+     {cart.length===0 ? "" : <Cart> </Cart>}
+      <Shop></Shop>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+      cart: state.cart
+    }
+}
+
+const mapDispatchToProps = {
+  removeFromCart: removeFromCart
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
